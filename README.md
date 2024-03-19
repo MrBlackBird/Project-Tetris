@@ -1,7 +1,6 @@
 # Project-Tetris
 
 ## Beware: work in progress
-
 This project is still being developed and at the time you're reading this it probably still is not functional.
 
 ## Description
