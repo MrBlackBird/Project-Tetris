@@ -1,7 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include <SFML/Graphics/Color.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Window/VideoMode.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
 
 class Tetris {
 public:
