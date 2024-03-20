@@ -1,7 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System.hpp>
-#include <SFML/System/Vector2.hpp>
 #include <SFML/Window.hpp>
 
 class Tetris {
@@ -115,4 +113,6 @@ int main() {
     // show window
     window.display();
   }
+
+  return 0;
 }
