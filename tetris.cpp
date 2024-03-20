@@ -61,18 +61,59 @@ public:
     blocks.emplace_back(lVec);
   }
 
-  void buildInverseL(int initialPosition){};
+  void buildInverseL(int initialPosition) {
+    std::vector<sf::Shape *> lInvVec;
+    int randColor = rand() % 6;
+    for (int i = 0; i < 4; i++) {
+      if (i != 3) {
+        sf::RectangleShape *square = new sf::RectangleShape(squareSize);
+        square->setPosition(initialPosition, 0 + (i * 30));
+        square->setFillColor(colors[randColor]);
+        lInvVec.emplace_back(square);
+      } else {
+        sf::RectangleShape *square = new sf::RectangleShape(squareSize);
+        square->setPosition(initialPosition - 30, 0 + (i * 30));
+        square->setFillColor(colors[randColor]);
+        lInvVec.emplace_back(square);
+      }
+    }
+    blocks.emplace_back(lInvVec);
+  }
 
   void buildZigzag(int initialPosition){};
 
   void buildInverseZigzag(int initialPosition){};
 
-  void buildStickout(int initialPosition){};
+  void buildStickout(int initialPosition) {
+    std::vector<sf::Shape *> stkVec;
+    int randColor = rand() % 6;
+    for (int i = 0; i < 3; i++) {
+      sf::RectangleShape *square = new sf::RectangleShape(squareSize);
+      square->setPosition(initialPosition, 0 + (i * 30));
+      square->setFillColor(colors[randColor]);
+      stkVec.emplace_back(square);
+      if (i == 1) {
+        sf::RectangleShape *square = new sf::RectangleShape(squareSize);
+        square->setPosition(initialPosition + 30, 0 + (i * 30));
+        square->setFillColor(colors[randColor]);
+        stkVec.emplace_back(square);
+      }
+    }
+    blocks.emplace_back(stkVec);
+  }
 
   // NOTE: store all the blocks here
 
   // create a vector of all basic shapes, igoring orientation
-  void createModelBlocks() {}
+  void createModelBlocks() {
+    buildBar(0); // 0 as a place-holder for the screen centering value
+    buildCube(0);
+    buildL(0);
+    buildInverseL(0);
+    buildZigzag(0);
+    buildInverseZigzag(0);
+    buildStickout(0);
+  }
 };
 
 int main() {
