@@ -44,7 +44,24 @@ public:
     blocks.emplace_back(cubeVec);
   }
 
-  void buildL(int initialPosition){};
+  void buildL(int initialPosition) {
+    std::vector<sf::Shape *> lVec;
+    int randColor = rand() % 6;
+    for (int i = 0; i < 4; i++) {
+      if (i != 3) {
+        sf::RectangleShape *square = new sf::RectangleShape(squareSize);
+        square->setPosition(initialPosition, 0 + (i * 30));
+        square->setFillColor(colors[randColor]);
+        lVec.emplace_back(square);
+      } else {
+        sf::RectangleShape *square = new sf::RectangleShape(squareSize);
+        square->setPosition(initialPosition + 30, 0 + (i * 30));
+        square->setFillColor(colors[randColor]);
+        lVec.emplace_back(square);
+      }
+    }
+    blocks.emplace_back(lVec);
+  }
 
   void buildInverseL(int initialPosition){};
 
@@ -62,6 +79,9 @@ public:
 
 int main() {
 
+  // FIX: balance the speed across various framerates, make movement non-smooth
+  // wait a set amount of time before moving a block further
+
   // render the window
   sf::RenderWindow window(sf::VideoMode(300, 600), "Tetirs knockoff");
 
@@ -78,6 +98,9 @@ int main() {
         window.close();
       }
     }
+
+    // FIX: add movement, event handling (movement + roation), conditions for
+    // when a row is filled
 
     // black background
     window.clear(sf::Color::Black);
