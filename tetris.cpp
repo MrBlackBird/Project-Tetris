@@ -1,10 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <ctime>
 
 class Tetris {
 public:
   sf::Vector2f squareSize = {30, 30};
+  int blockSpeed = 10;
   sf::Color cyan = sf::Color(0, 255, 255);
   sf::Color blue = sf::Color(0, 0, 255);
   sf::Color orange = sf::Color(255, 165, 0);
@@ -13,6 +15,8 @@ public:
   sf::Color purple = sf::Color(128, 0, 128);
   std::vector<sf::Color> colors = {cyan, blue, orange, yellow, green, purple};
   std::vector<std::vector<sf::Shape *>> blocks;
+  std::vector<sf::Shape *> currentBlock;
+  std::vector<bool> placed;
 
   // NOTE: define structure of all the blocks
 
@@ -149,21 +153,27 @@ public:
     // buildStickout(0);
   }
 
-  void initialRoation();
+  void initialRoation() {}
+
+  void playerRotation() {}
 };
 
 int main() {
 
-  // FIX: balance the speed across various framerates, make movement non-smooth
+  // FIX: balance the speed across various framerates, make movement non-smooth:
   // wait a set amount of time before moving a block further
 
   // render the window
   sf::RenderWindow window(sf::VideoMode(300, 600), "Tetirs knockoff");
 
   Tetris tetris;
+  srand(time(NULL));
 
   // gen all shapes
   tetris.createModelBlocks();
+
+  // determine the current block
+  tetris.currentBlock = tetris.blocks[(rand() % 8)];
 
   // game loop
   while (window.isOpen()) {
@@ -180,11 +190,17 @@ int main() {
     // black background
     window.clear(sf::Color::Black);
 
+    // FIX: check if the current block has been placed - colision detection
+
+    // current block movement
+    tetris.initialRoation();
+    for (auto &sq : tetris.currentBlock) {
+      sq->move(0, tetris.blockSpeed);
+    }
+
     // drawing tests
-    for (auto &block : tetris.blocks) {
-      for (auto &sh : block) {
-        window.draw(*sh);
-      }
+    for (auto &sq : tetris.currentBlock) {
+      window.draw(*sq);
     }
 
     // show window
