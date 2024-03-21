@@ -80,9 +80,43 @@ public:
     blocks.emplace_back(lInvVec);
   }
 
-  void buildZigzag(int initialPosition){};
+  void buildZigzag(int initialPosition) {
+    std::vector<sf::Shape *> zigVec;
+    int randColor = rand() % 6;
+    for (int i = 0; i < 4; i++) {
+      if (i < 2) {
+        sf::RectangleShape *square = new sf::RectangleShape(squareSize);
+        square->setPosition(initialPosition + 30, 0 + (i * 30));
+        square->setFillColor(colors[randColor]);
+        zigVec.emplace_back(square);
+      } else {
+        sf::RectangleShape *square = new sf::RectangleShape(squareSize);
+        square->setPosition(initialPosition, 0 + ((i - 1) * 30));
+        square->setFillColor(colors[randColor]);
+        zigVec.emplace_back(square);
+      }
+    }
+    blocks.emplace_back(zigVec);
+  }
 
-  void buildInverseZigzag(int initialPosition){};
+  void buildInverseZigzag(int initialPosition) {
+    std::vector<sf::Shape *> zigInvVec;
+    int randColor = rand() % 6;
+    for (int i = 0; i < 4; i++) {
+      if (i < 2) {
+        sf::RectangleShape *square = new sf::RectangleShape(squareSize);
+        square->setPosition(initialPosition, 0 + (i * 30));
+        square->setFillColor(colors[randColor]);
+        zigInvVec.emplace_back(square);
+      } else {
+        sf::RectangleShape *square = new sf::RectangleShape(squareSize);
+        square->setPosition(initialPosition + 30, 0 + ((i - 1) * 30));
+        square->setFillColor(colors[randColor]);
+        zigInvVec.emplace_back(square);
+      }
+    }
+    blocks.emplace_back(zigInvVec);
+  }
 
   void buildStickout(int initialPosition) {
     std::vector<sf::Shape *> stkVec;
@@ -106,14 +140,16 @@ public:
 
   // create a vector of all basic shapes, igoring orientation
   void createModelBlocks() {
-    buildBar(0); // 0 as a place-holder for the screen centering value
-    buildCube(0);
-    buildL(0);
-    buildInverseL(0);
-    buildZigzag(0);
-    buildInverseZigzag(0);
-    buildStickout(0);
+    // buildBar(0); // 0 as a place-holder for the screen centering value
+    // buildCube(0);
+    // buildL(0);
+    // buildInverseL(0);
+    // buildZigzag(0);
+    // buildInverseZigzag(0);
+    // buildStickout(0);
   }
+
+  void initialRoation();
 };
 
 int main() {
