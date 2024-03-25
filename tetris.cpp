@@ -6,7 +6,7 @@
 class Tetris {
 public:
   sf::Vector2f squareSize = {30, 30};
-  int blockSpeed = 10;
+  int blockSpeed = 200;
   sf::Color cyan = sf::Color(0, 255, 255);
   sf::Color blue = sf::Color(0, 0, 255);
   sf::Color orange = sf::Color(255, 165, 0);
@@ -160,7 +160,7 @@ public:
 
 int main() {
 
-  // FIX: balance the speed across various framerates, make movement non-smooth:
+  // FIX: make movement non-smooth:
   // wait a set amount of time before moving a block further
 
   // render the window
@@ -175,6 +175,9 @@ int main() {
   // determine the current block
   tetris.currentBlock = tetris.blocks[(rand() % 8)];
 
+  // initialize clock
+  sf::Clock clock;
+
   // game loop
   while (window.isOpen()) {
     sf::Event event;
@@ -183,6 +186,8 @@ int main() {
         window.close();
       }
     }
+
+    sf::Time frameTime = clock.restart();
 
     // FIX: add movement, event handling (movement + roation), conditions for
     // when a row is filled
@@ -195,7 +200,7 @@ int main() {
     // current block movement
     tetris.initialRoation();
     for (auto &sq : tetris.currentBlock) {
-      sq->move(0, tetris.blockSpeed);
+      sq->move(0, (tetris.blockSpeed * frameTime.asSeconds()));
     }
 
     // drawing tests
